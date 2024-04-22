@@ -1,20 +1,16 @@
-            - name: WakaTime Stats Charts Generator - TokyoNight Theme
-  # You may pin to the exact commit or the version.
-  # uses: Fr4nk1inCs/wakatime-charts@cead4e9ec39a9a005409d85913ba9188536703c5
-  uses: Fr4nk1inCs/wakatime-charts@v0.1.0
-  with:
-    # Your WakaTime API Key
-    WAKATIME_API_KEY: ${{ secrets.api }}
-    # GitHub access token with Repo
-    GITHUB_TOKEN: # default is ${{ github.token }}
-    # Branch that needs to updated
-    BRANCH_NAME: # optional, default is master
-    # Commit message on each updation
-    COMMIT_MESSAGE: # optional, default is 📊
-    # Name of the folder in which generated charts will be shown
-    IMAGES_FOLDER: # optional, default is images
-    # User email for git
-    GIT_USER_EMAIL: # optional, default is 41898282+github-actions[bot]@users.noreply.github.com
-    # User name for git
-    GIT_USER_NAME: # optional, default is GitHub Actions
-          
+name: Wakatime Charts
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  update-charts:
+    name: Update wakatime stats charts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Fr4nk1inCs/wakatime-charts@master
+        with:
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # only required if using the action in repository other than profile
